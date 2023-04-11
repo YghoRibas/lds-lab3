@@ -1,7 +1,11 @@
-* US01:  Como professor, desejo incentivar meus alunos a terem um bom comportamento e se empenharem mais em minhas disciplinas.
-* US02:  Como aluno, desejo me cadastrar no sistema de reconhecimento.
-* US02:  Como usuário, desejo verificar meu saldo e minhas movimentações. 
-* US03:  Como aluno, desejo utilizar minhas moedas para conseguir benefícios.
-* US04:  Como empresa parceira, desejo me cadastrar no sistema.
-* US05:  Como empresa parceira, desejo cadastrar uma vantagem ao sistema.
-* US06:  Como aluno, desejo ser notificado quando houver movimentações em minha conta.
+- US01 - Como aluno, quero me cadastrar no sistema de mérito, para poder participar do programa de reconhecimento.
+- US02 - Como professor, quero ter uma lista dos meus alunos, para poder enviar moedas de reconhecimento para eles.
+- US03 - Como professor, quero ter uma conta de moedas, para poder enviar moedas de reconhecimento para meus alunos.
+- US04 - Como aluno, quero receber um email de notificação quando receber uma moeda de reconhecimento, para que eu saiba que fui reconhecido pelo meu bom desempenho.
+- US05 - Como professor, quero ver meu saldo de moedas e minhas transações, para poder controlar melhor o uso das moedas.
+- US06 - Como aluno, quero ver meu saldo de moedas e minhas transações, para poder controlar melhor o uso das moedas.
+- US07 - Como aluno, quero trocar minhas moedas por vantagens cadastradas no sistema, para poder aproveitar os benefícios do programa de reconhecimento.
+- US08 - Como empresa parceira, quero me cadastrar no sistema de mérito, para poder oferecer vantagens aos alunos.
+- US09 - Como aluno, quero receber um email de confirmação com um código de cupom, ao trocar minhas moedas por uma vantagem, para poder resgatar a vantagem na loja.
+- US10 - Como empresa parceira, quero receber um email de confirmação com um código de cupom, ao um aluno resgatar uma vantagem, para poder conferir a troca.
+- US11 - Como usuário, eu quero poder autenticar-me no sistema, fornecendo um nome de usuário e senha válidos, para ter acesso às funcionalidades disponíveis e garantir a segurança dos dados.
