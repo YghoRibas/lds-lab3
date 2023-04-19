@@ -13,3 +13,4 @@
   - [Diagrama de Sequência do Sistema - UC04](./projeto/DSS/diagrama_sequencia_sistema_uc04.png)
   - [Diagrama de Sequência do Sistema - UC05](./projeto/DSS/diagrama_sequencia_sistema_uc05.png)
   - [Diagrama de Sequência do Sistema - UC06](./projeto/DSS/diagrama_sequencia_sistema_uc06.png)
+- [Modelo Entidade Relacionamento](./projeto/modelo_er.md)
