@@ -4,7 +4,7 @@
 - Departamento (Nome)
 - Aluno (Nome, Email, CPF, RG, Endereço, moedas)
 - Professor (Nome, CPF, moedas)
-- Vantagem (Nome, Descrição, Custo)
+- Vantagem (Nome, Descrição, Custo, Foto)
 - Empresa (Nome)
 
 ### Relacionamentos:

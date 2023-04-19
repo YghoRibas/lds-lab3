@@ -6,6 +6,4 @@
 - US06 - Como aluno, quero ver meu saldo de moedas e minhas transações, para poder controlar melhor o uso das moedas.
 - US07 - Como aluno, quero trocar minhas moedas por vantagens cadastradas no sistema, para poder aproveitar os benefícios do programa de reconhecimento.
 - US08 - Como empresa parceira, quero cadastrar vantagens no sistema de mérito, para poderem ser resgatadas por alunos.
-- US09 - Como aluno, quero receber um email de confirmação com um código de cupom, ao trocar minhas moedas por uma vantagem, para poder resgatar a vantagem na loja.
-- US10 - Como empresa parceira, quero receber um email de confirmação com um código de cupom, ao um aluno resgatar uma vantagem, para poder conferir a troca.
-- US11 - Como usuário, eu quero poder autenticar-me no sistema, fornecendo um nome de usuário e senha válidos, para ter acesso às funcionalidades disponíveis e garantir a segurança dos dados.
+- US09 - Como usuário, eu quero poder autenticar-me no sistema, fornecendo um nome de usuário e senha válidos, para ter acesso às funcionalidades disponíveis e garantir a segurança dos dados.
