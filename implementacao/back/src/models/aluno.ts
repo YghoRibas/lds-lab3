@@ -1,10 +1,17 @@
-const mongoose = require('mongoose');
-const Usuario = require('./usuario');
+import mongoose from 'mongoose';
+import { IUsuario, Usuario } from './usuario';
+
+export interface IAluno extends IUsuario {
+  moeda: number;
+  cpf: string;
+  rg: string;
+  endereco: string;
+}
 
 const alunoSchema = new mongoose.Schema({
   moeda: {
     type: Number,
-    required: true,
+    required: false,
     trim: true,
     lowercase: true,
   },
@@ -31,6 +38,4 @@ const alunoSchema = new mongoose.Schema({
   }
 });
 
-const Aluno = Usuario.discriminator('Aluno', alunoSchema);
-
-module.exports = Aluno;
+export const Aluno = Usuario.discriminator<IAluno>('aluno', alunoSchema);

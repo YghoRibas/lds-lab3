@@ -1,6 +1,6 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const alunoRouter = require("./routes/alunoRoutes.js");
+import express from "express";
+import mongoose from "mongoose";
+import alunoRouter from "./routes/aluno.routes";
 
 const app = express();
 
