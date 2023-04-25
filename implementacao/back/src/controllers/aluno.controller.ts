@@ -21,7 +21,6 @@ export class AlunoController {
   }
 
   public async createAluno(req: Request, res: Response): Promise<void> {
-    console.log(req.body);
     const data: IAluno = req.body;
     const newData: IAluno = await this.alunoService.createAluno(data);
     res.send(newData);
