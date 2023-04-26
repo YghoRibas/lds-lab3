@@ -22,6 +22,7 @@ export class EmpresaController {
     
       public async createEmpresa(req: Request, res: Response): Promise<void> {
         const data: IEmpresa = req.body;
+        data.vantagens = []
         const newData: IEmpresa = await this.empresaService.createEmpresa(data);
         res.send(newData);
       }
