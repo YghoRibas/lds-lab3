@@ -1,12 +1,38 @@
-// const mongoose = require('mongoose');
-// const Usuario = require('./usuario');
+import mongoose from 'mongoose';
+import { IUsuario, Usuario } from './usuario';
 
-// const empresaSchema = new mongoose.Schema({
-//   vantagem: {
-//     type: String,
-//   }
-// });
+export interface IEmpresa extends IUsuario {
+    nome: string;
+    descricao: string;
+    valor: number;
+    foto: {
+      data: Buffer;
+      contentType: string;
+    };
+}
 
-// const Empresa = Usuario.discriminator('Empresa', empresaSchema);
+const empresaSchema = new mongoose.Schema({
+  nome: {
+    type: String,
+    required: true,
+    lowercase: true
+  },
 
-// module.exports = Empresa;
+  descricao:{
+    type: String,
+    required: true,
+    lowercase: true
+  },
+
+  valor:{
+    type: Number,
+    required: true,
+  },
+
+  foto:{
+    data: Buffer,
+    contentType: String,
+  }
+});
+
+export const Empresa = Usuario.discriminator<IEmpresa>('Empresa', empresaSchema);
