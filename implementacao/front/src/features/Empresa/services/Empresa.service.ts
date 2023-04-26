@@ -17,7 +17,7 @@ export class EmpresaService {
   }
 
   static async updateEmpresa(empresa: IEmpresa): Promise<void> {
-    await http.put(`/empresa/${empresa.id}`, empresa);
+    await http.put(`/empresa/${empresa._id}`, empresa);
   }
 
   static async deleteEmpresa(id: string): Promise<void> {

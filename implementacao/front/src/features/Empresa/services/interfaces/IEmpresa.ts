@@ -1,5 +1,5 @@
 export interface IEmpresa {
-  id?: string;
+  _id?: string;
   nome: string;
   email: string;
   senha: string;

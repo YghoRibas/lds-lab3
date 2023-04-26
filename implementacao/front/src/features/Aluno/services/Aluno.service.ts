@@ -17,7 +17,7 @@ export class AlunoService {
   }
 
   static async updateAluno(aluno: IAluno): Promise<void> {
-    await http.put(`/aluno/${aluno.id}`, aluno);
+    await http.put(`/aluno/${aluno._id}`, aluno);
   }
 
   static async deleteAluno(id: string): Promise<void> {

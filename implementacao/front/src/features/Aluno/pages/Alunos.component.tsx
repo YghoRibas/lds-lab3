@@ -20,6 +20,7 @@ export const Alunos = () => {
   const { data, refetch } = useQuery<IAluno[]>({
     queryKey: ['alunos'],
     queryFn: getListaAlunos,
+    refetchOnWindowFocus: false,
   });
 
   return (
@@ -36,6 +37,7 @@ export const Alunos = () => {
               <th>Nome</th>
               <th>Email</th>
               <th>Moedas</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -43,13 +45,24 @@ export const Alunos = () => {
               data.length > 0 &&
               data.map(
                 (aluno: IAluno) => (
-                  <label htmlFor={modalId}>
-                    <tr key={aluno.id} onClick={() => setSelectedAluno(aluno.id!)}>
-                      <td>{aluno.nome}</td>
-                      <td>{aluno.email}</td>
-                      <td>{aluno.moedas}</td>
-                    </tr>
-                  </label>
+                  <tr key={aluno._id}>
+                    <td>{aluno.nome}</td>
+                    <td>{aluno.email}</td>
+                    <td>{aluno.moedas}</td>
+                    <td>
+                      <div className='flex justify-end'>
+                        <label
+                          htmlFor={modalId}
+                          className='btn'
+                          onClick={() => {
+                            setSelectedAluno(aluno._id!);
+                          }}
+                        >
+                          Editar
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
                 ),
                 []
               )}

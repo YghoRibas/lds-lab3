@@ -4,7 +4,7 @@ import { EmpresaService } from '../services';
 import { IEmpresa } from '../services/interfaces';
 import { EmpresaForm } from '../components';
 
-const modalId: string = 'aluguelForm';
+const modalId: string = 'empresaForm';
 
 export const Empresas = () => {
   const [selectedEmpresa, setSelectedEmpresa] = useState<string | null>(null);
@@ -20,6 +20,7 @@ export const Empresas = () => {
   const { data, refetch } = useQuery<IEmpresa[]>({
     queryKey: ['empresas'],
     queryFn: getListaEmpresas,
+    refetchOnWindowFocus: false,
   });
 
   return (
@@ -35,6 +36,7 @@ export const Empresas = () => {
             <tr>
               <th>Nome</th>
               <th>Email</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -42,12 +44,23 @@ export const Empresas = () => {
               data.length > 0 &&
               data.map(
                 (empresa: IEmpresa) => (
-                  <label htmlFor={modalId}>
-                    <tr key={empresa.id} onClick={() => setSelectedEmpresa(empresa.id!)}>
-                      <td>{empresa.nome}</td>
-                      <td>{empresa.email}</td>
-                    </tr>
-                  </label>
+                  <tr key={empresa._id} onClick={() => setSelectedEmpresa(empresa._id!)}>
+                    <td>{empresa.nome}</td>
+                    <td>{empresa.email}</td>
+                    <td>
+                      <div className='flex justify-end'>
+                        <label
+                          htmlFor={modalId}
+                          className='btn'
+                          onClick={() => {
+                            setSelectedEmpresa(empresa._id!);
+                          }}
+                        >
+                          Editar
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
                 ),
                 []
               )}
