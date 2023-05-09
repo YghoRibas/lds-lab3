@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import alunoRouter from "./routes/aluno.routes";
 import empresaRouter from "./routes/empresa.routes";
 import cors from "cors";
+import usuarioRouter from './routes/usuario.routes';
 
 const app = express();
 
@@ -20,6 +21,7 @@ mongoose.connect(
 
 app.use(alunoRouter);
 app.use(empresaRouter)
+app.use(usuarioRouter)
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000...");

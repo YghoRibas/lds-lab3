@@ -9,5 +9,6 @@ alunoRouter.get('/aluno/:id', alunoController.getAlunoById.bind(alunoController)
 alunoRouter.post('/aluno', alunoController.createAluno.bind(alunoController));
 alunoRouter.put('/aluno/:id', alunoController.updateAluno.bind(alunoController));
 alunoRouter.delete('/aluno/:id', alunoController.deleteAluno.bind(alunoController));
+alunoRouter.get('/aluno/saldo/:id', alunoController.getSaldoAluno.bind(alunoController));
 
 export default alunoRouter;
