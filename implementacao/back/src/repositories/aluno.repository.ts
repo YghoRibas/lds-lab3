@@ -1,4 +1,6 @@
+import { ITransacao, Transacao, Usuario } from '../models';
 import { Aluno, IAluno } from '../models/aluno';
+import { ISaldoAluno } from '../types';
 
 export class AlunoRepository {
   public async getAllAlunos(): Promise<IAluno[]> {
@@ -22,5 +24,28 @@ export class AlunoRepository {
 
   public async deleteAluno(id: string): Promise<void> {
     await Aluno.findByIdAndDelete(id);
+  }
+
+  public async getSaldoAluno(id: string): Promise<ISaldoAluno> {
+    const aluno = await Aluno.findById(id);
+    
+    if (aluno) {
+      const transacoes = await Transacao.find({ $or: [{ remetenteId: id }, { destinatarioId: id }] })
+
+      transacoes.forEach(async transacao => {
+        if(transacao.remetenteId !== id) {
+          const usuario = await Usuario.findById(transacao.remetenteId);
+          transacao.remetenteId = usuario?.nome || '';
+        } else {
+          const usuario = await Usuario.findById(transacao.destinatarioId);
+          transacao.destinatarioId = usuario?.nome || '';
+        }
+      });
+
+
+      return { moedas: aluno.moedas, transacoes };
+    }
+
+    return { moedas: 0, transacoes: [] };
   }
 }

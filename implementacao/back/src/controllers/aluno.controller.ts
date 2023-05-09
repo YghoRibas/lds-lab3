@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { AlunoService } from '../services';
 import { IAluno } from '../models';
+import { ISaldoAluno } from '../types';
 
 export class AlunoController {
   private alunoService: AlunoService;
@@ -38,5 +39,11 @@ export class AlunoController {
     const id: string = req.params.id;
     await this.alunoService.deleteAluno(id);
     res.send();
+  }
+
+  public async getSaldoAluno(req: Request, res: Response): Promise<void> {
+    const id: string = req.params.id;
+    const saldo: ISaldoAluno = await this.alunoService.getSaldoAluno(id);
+    res.send(saldo);
   }
 }
