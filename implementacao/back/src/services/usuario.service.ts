@@ -1,6 +1,5 @@
-import { IAluno } from '../models/aluno';
+import { IUsuario } from '../models';
 import { UsuarioRepository } from '../repositories';
-import { ISaldoAluno } from '../types';
 
 export class UsuarioService {
   private usuarioRepository: UsuarioRepository;
@@ -9,7 +8,11 @@ export class UsuarioService {
     this.usuarioRepository = new UsuarioRepository();
   }
 
-  public async login(email: string, senha: string): Promise<string> {
+  public async getUsuarioById(id: string): Promise<IUsuario | null> {
+    return await this.usuarioRepository.getUsuarioById(id);
+  }
+
+  public async login(email: string, senha: string): Promise<string | null> {
     return await this.usuarioRepository.login(email, senha);
   }
 }

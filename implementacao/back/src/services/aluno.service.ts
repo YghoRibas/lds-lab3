@@ -1,12 +1,17 @@
 import { IAluno } from '../models/aluno';
-import { AlunoRepository } from '../repositories';
+import { AlunoRepository, TransacaoRepository, UsuarioRepository } from '../repositories';
 import { ISaldoAluno } from '../types';
+import { CustomError } from '../utils/errorHandler';
 
 export class AlunoService {
   private alunoRepository: AlunoRepository;
+  private usuarioRepository: UsuarioRepository;
+  private trasacaoRepository: TransacaoRepository;
 
   constructor() {
     this.alunoRepository = new AlunoRepository();
+    this.usuarioRepository = new UsuarioRepository();
+    this.trasacaoRepository = new TransacaoRepository();
   }
 
   public async getAllAlunos(): Promise<IAluno[]> {
@@ -30,6 +35,23 @@ export class AlunoService {
   }
 
   public async getSaldoAluno(id: string): Promise<ISaldoAluno> {
-    return await this.alunoRepository.getSaldoAluno(id);
+    const aluno = await this.alunoRepository.getAlunoById(id);
+
+    if (aluno) {
+      const transacoes = await this.trasacaoRepository.getTransacaoByRemetenteIdOrDestinatario(id);
+
+      transacoes.forEach(async (transacao) => {
+        const usuario = await this.usuarioRepository.getUsuarioById(transacao.remetenteId);
+        if (transacao.remetenteId !== id) {
+          transacao.remetenteId = usuario?.nome || '';
+        } else {
+          transacao.destinatarioId = usuario?.nome || '';
+        }
+      });
+
+      return { moedas: aluno.moedas, transacoes };
+    } else {
+      throw new CustomError('Aluno não encontrado', 404);
+    }
   }
 }
