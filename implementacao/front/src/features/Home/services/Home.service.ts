@@ -16,4 +16,15 @@ export class HomeService {
 
     return response.data;
   }
+
+  static async postTransacao(professorId: string, alunoId: string, moedas: number, descricao: string): Promise<void> {
+    const body = {
+      professorId,
+      alunoId,
+      moedas,
+      descricao,
+    };
+
+    await http.post(`/professor/transferirMoedas`, body);
+  }
 }

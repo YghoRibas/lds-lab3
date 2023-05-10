@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { AlunoService } from '../services';
 import { IAluno } from '../models';
-import { ISaldoAluno } from '../types';
+import { ISaldo } from '../types';
 import { CustomError } from '../utils/errorHandler';
 
 export class AlunoController {
@@ -33,7 +33,6 @@ export class AlunoController {
   public async createAluno(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const data: IAluno = req.body;
-      data.moedas = 1000;
       const newData: IAluno = await this.alunoService.createAluno(data);
       res.status(201).json(newData);
     } catch (err: any) {
@@ -65,7 +64,7 @@ export class AlunoController {
   public async getSaldoAluno(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const id: string = req.params.id;
-      const saldo: ISaldoAluno = await this.alunoService.getSaldoAluno(id);
+      const saldo: ISaldo = await this.alunoService.getSaldoAluno(id);
       res.status(200).json(saldo);
     } catch (err: any) {
       next(new CustomError(err.message, err.statusCode));

@@ -1,6 +1,6 @@
 import { IAluno } from '../models/aluno';
 import { AlunoRepository, TransacaoRepository, UsuarioRepository } from '../repositories';
-import { ISaldoAluno } from '../types';
+import { ISaldo, ITransacaoWithNames } from '../types';
 import { CustomError } from '../utils/errorHandler';
 
 export class AlunoService {
@@ -40,22 +40,30 @@ export class AlunoService {
     return await this.alunoRepository.deleteAluno(id);
   }
 
-  public async getSaldoAluno(id: string): Promise<ISaldoAluno> {
+  public async getSaldoAluno(id: string): Promise<ISaldo> {
     const aluno = await this.alunoRepository.getAlunoById(id);
 
     if (aluno) {
       const transacoes = await this.trasacaoRepository.getTransacaoByRemetenteIdOrDestinatario(id);
 
-      transacoes.forEach(async (transacao) => {
-        const usuario = await this.usuarioRepository.getUsuarioById(transacao.remetenteId);
-        if (transacao.remetenteId !== id) {
-          transacao.remetenteId = usuario?.nome || '';
-        } else {
-          transacao.destinatarioId = usuario?.nome || '';
-        }
-      });
+      let transacoesWithNames: ITransacaoWithNames[] = [];
 
-      return { moedas: aluno.moedas, transacoes };
+      for (const transacao of transacoes) {
+        const remetente = await this.usuarioRepository.getUsuarioById(transacao.remetenteId);
+        const destinatario = await this.usuarioRepository.getUsuarioById(transacao.destinatarioId);
+
+        transacoesWithNames.push({
+          remetenteId: transacao.remetenteId,
+          remetenteNome: remetente?.nome || '',
+          destinatarioId: transacao.destinatarioId,
+          destinatarioNome: destinatario?.nome || '',
+          valor: transacao.valor,
+          data: transacao.data,
+          descricao: transacao.descricao,
+        });
+      }
+
+      return { moedas: aluno.moedas, transacoes: transacoesWithNames };
     } else {
       throw new CustomError('Aluno não encontrado', 404);
     }

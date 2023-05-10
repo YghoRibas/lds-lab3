@@ -44,7 +44,7 @@ const transacaoSchema = new Schema({
     type: String,
     required: false,
     trim: true,
-  }
+  },
 });
 
-export const Transacao = model<ITransacao>('transacao', transacaoSchema);
+export const Transacao = model<ITransacao>('transacoe', transacaoSchema);

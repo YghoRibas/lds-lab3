@@ -1,6 +1,4 @@
-import { ITransacao, Transacao, Usuario } from '../models';
 import { Aluno, IAluno } from '../models/aluno';
-import { ISaldoAluno } from '../types';
 
 export class AlunoRepository {
   public async getAllAlunos(): Promise<IAluno[]> {

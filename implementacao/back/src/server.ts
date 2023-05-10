@@ -5,6 +5,7 @@ import empresaRouter from './routes/empresa.routes';
 import cors from 'cors';
 import usuarioRouter from './routes/usuario.routes';
 import { errorHandler } from './utils';
+import professorRouter from './routes/professor.routes';
 
 const app = express();
 
@@ -20,6 +21,7 @@ mongoose.connect('mongodb+srv://auth-lab3:000@lds-lab03-cluster.j4kwnni.mongodb.
 app.use(alunoRouter);
 app.use(empresaRouter);
 app.use(usuarioRouter);
+app.use(professorRouter);
 
 app.use(errorHandler);
 
