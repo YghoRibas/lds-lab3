@@ -19,7 +19,13 @@ export class AlunoService {
   }
 
   public async getAlunoById(id: string): Promise<IAluno | null> {
-    return await this.alunoRepository.getAlunoById(id);
+    const aluno = await this.alunoRepository.getAlunoById(id);
+
+    if (aluno) {
+      return aluno;
+    } else {
+      throw new CustomError('Aluno não encontrado', 404);
+    }
   }
 
   public async createAluno(data: IAluno): Promise<IAluno> {

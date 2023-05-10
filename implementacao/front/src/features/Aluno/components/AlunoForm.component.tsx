@@ -121,7 +121,6 @@ export const AlunoForm = ({ id, modalId, refetchAlunos, onClose }: IProps) => {
           ) : (
             <form
               onSubmit={(e) => {
-                console.log('submit');
                 formik.handleSubmit(e);
               }}
             >
