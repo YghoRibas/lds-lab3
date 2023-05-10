@@ -1,6 +1,7 @@
 # Laboratório de Desenvolvimento de Software - Sistema de Mérito Escolar (LAB03)
 
 ## Projeto
+
 - [Estórias de Usuário](./projeto/estorias_usuario.md)
 - [Diagrama Caso de Uso](./projeto/diagrama_casos_de_uso.png)
 - [Diagrama de Classes](./projeto/diagrama_de_classes.png)
@@ -13,4 +14,9 @@
   - [Diagrama de Sequência do Sistema - UC04](./projeto/DSS/diagrama_sequencia_sistema_uc04.png)
   - [Diagrama de Sequência do Sistema - UC05](./projeto/DSS/diagrama_sequencia_sistema_uc05.png)
   - [Diagrama de Sequência do Sistema - UC06](./projeto/DSS/diagrama_sequencia_sistema_uc06.png)
+- [Diagramas de Sequência](./projeto/DS)
+  - [Diagramas de Sequência - CRUD Aluno](./projeto/DS/diagrama_de_sequencia_crud_aluno.png)
+  - [Diagramas de Sequência - CRUD Empresa](./projeto/DS/diagrama_de_sequencia_crud_empresa.png)
+  - [Diagrama de Sequência - UC03](./projeto/DS/diagrama_de_sequencia_uc03.png)
+  - [Diagrama de Sequência - UC04](./projeto/DS/diagrama_de_sequencia_uc04.png)
 - [Modelo Entidade Relacionamento](./projeto/modelo_er.md)
