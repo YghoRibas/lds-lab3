@@ -62,16 +62,6 @@ export class ProfessorController {
     }
   }
 
-  public async getSaldoProfessor(req: Request, res: Response, next: NextFunction): Promise<void> {
-    try {
-      const id: string = req.params.id;
-      const saldo: ISaldo = await this.professorService.getSaldoProfessor(id);
-      res.status(200).json(saldo);
-    } catch (err: any) {
-      next(new CustomError(err.message, err.statusCode));
-    }
-  }
-
   public async transferirMoedas(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const professorId: string = req.body.professorId;
