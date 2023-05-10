@@ -1,11 +1,17 @@
 import { IAluno } from '../models/aluno';
-import { AlunoRepository } from '../repositories';
+import { AlunoRepository, TransacaoRepository, UsuarioRepository } from '../repositories';
+import { ISaldo, ITransacaoWithNames } from '../types';
+import { CustomError } from '../utils/errorHandler';
 
 export class AlunoService {
   private alunoRepository: AlunoRepository;
+  private usuarioRepository: UsuarioRepository;
+  private trasacaoRepository: TransacaoRepository;
 
   constructor() {
     this.alunoRepository = new AlunoRepository();
+    this.usuarioRepository = new UsuarioRepository();
+    this.trasacaoRepository = new TransacaoRepository();
   }
 
   public async getAllAlunos(): Promise<IAluno[]> {
@@ -13,7 +19,13 @@ export class AlunoService {
   }
 
   public async getAlunoById(id: string): Promise<IAluno | null> {
-    return await this.alunoRepository.getAlunoById(id);
+    const aluno = await this.alunoRepository.getAlunoById(id);
+
+    if (aluno) {
+      return aluno;
+    } else {
+      throw new CustomError('Aluno não encontrado', 404);
+    }
   }
 
   public async createAluno(data: IAluno): Promise<IAluno> {
