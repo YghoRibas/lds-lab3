@@ -6,12 +6,12 @@ import { CustomError } from '../utils/errorHandler';
 export class AlunoService {
   private alunoRepository: AlunoRepository;
   private usuarioRepository: UsuarioRepository;
-  private trasacaoRepository: TransacaoRepository;
+  private transacaoRepository: TransacaoRepository;
 
   constructor() {
     this.alunoRepository = new AlunoRepository();
     this.usuarioRepository = new UsuarioRepository();
-    this.trasacaoRepository = new TransacaoRepository();
+    this.transacaoRepository = new TransacaoRepository();
   }
 
   public async getAllAlunos(): Promise<IAluno[]> {

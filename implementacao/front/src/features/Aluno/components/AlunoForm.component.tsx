@@ -183,7 +183,6 @@ export const AlunoForm = ({ id, modalId, refetchAlunos, onClose }: IProps) => {
                     </label>
                   )}
                 </div>
-                {JSON.stringify(formik.errors)}
               </div>
               <div className='modal-action'>
                 {id && (

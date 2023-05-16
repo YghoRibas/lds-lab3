@@ -30,7 +30,14 @@ export const Login = () => {
   });
 
   return (
-    <div className='flex w-full h-full justify-center items-center'>
+    <div
+      className='flex w-full h-full justify-center items-center'
+      style={{
+        backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px)',
+        backgroundPosition: '50% 50%',
+        backgroundSize: '1.1rem 1.1rem',
+      }}
+    >
       <div className='card bg-base-200 shadow-xl w-[400px]'>
         <div className='card-body'>
           <form
