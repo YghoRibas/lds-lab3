@@ -64,7 +64,7 @@ export class ProfessorService {
           descricao,
         });
         await sendEmail(aluno.email, {
-          subject: 'Algo',
+          subject: 'Moedas Recebidas',
           type: MailType.TEXT,
           body: `Voce recebeu ${moedas} moedas de ${professor.nome}`
         });
