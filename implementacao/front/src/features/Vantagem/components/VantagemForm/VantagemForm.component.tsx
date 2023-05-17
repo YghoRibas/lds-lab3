@@ -89,7 +89,14 @@ export const VantagemForm = ({ id, modalId, refetchVantagens, onClose }: IProps)
 
         return vantagem;
       } else {
-        return {};
+        return {
+          nome: '',
+          descricao: '',
+          valor: 0,
+          foto: '',
+          fotoName: '',
+          idEmresa: '',
+        };
       }
     } catch (error) {
       return {
@@ -97,14 +104,16 @@ export const VantagemForm = ({ id, modalId, refetchVantagens, onClose }: IProps)
         descricao: '',
         valor: 0,
         foto: '',
+        fotoName: '',
         idEmresa: '',
       };
     }
   };
 
   const { isLoading, isFetching } = useQuery({
-    queryKey: ['vantagem', id],
+    queryKey: ['vantagem'],
     queryFn: getVantagemSelecionada,
+    enabled: !!id,
   });
 
   return (

@@ -9,6 +9,7 @@ const modalFormId: string = 'vantagemForm';
 
 export const Vantagens = () => {
   const [selectedVantagem, setSelectedVantagemId] = React.useState<string | null>(null);
+  const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const id = localStorage.getItem('id');
   const tipo = localStorage.getItem('tipo');
 
@@ -33,7 +34,13 @@ export const Vantagens = () => {
       <div className='flex flex-col grow h-full'>
         {tipo === 'empresa' && (
           <div className='flex mx-12 mt-12 justify-end'>
-            <label htmlFor={modalFormId} className='btn btn-primary shadow'>
+            <label
+              htmlFor={modalFormId}
+              className='btn btn-primary shadow'
+              onClick={() => {
+                setSelectedVantagemId(null);
+              }}
+            >
               Criar
             </label>
           </div>
@@ -48,14 +55,23 @@ export const Vantagens = () => {
             <div className='flex flex-wrap gap-4 overflow-y-auto'>
               {data?.map((vantagem) => (
                 <label key={vantagem._id} htmlFor={modalFormId}>
-                  <VantagemCard title={vantagem.nome} description={vantagem.descricao} image={vantagem.foto} value={vantagem.valor} onClick={() => setSelectedVantagemId(vantagem._id!)} isAluno={tipo === 'aluno'} />
+                  <VantagemCard
+                    title={vantagem.nome}
+                    description={vantagem.descricao}
+                    image={vantagem.foto}
+                    value={vantagem.valor}
+                    onClick={() => {
+                      setSelectedVantagemId(vantagem._id!);
+                    }}
+                    isAluno={tipo === 'aluno'}
+                  />
                 </label>
               ))}
             </div>
           )}
         </div>
       </div>
-      {tipo === 'empresa' && <VantagemForm modalId={modalFormId} refetchVantagens={refetch} onClose={() => console.log('fechou')} id={selectedVantagem} />}
+      {tipo === 'empresa' && <VantagemForm modalId={modalFormId} refetchVantagens={refetch} id={selectedVantagem} />}
     </>
   );
 };
