@@ -26,7 +26,7 @@ export const Extrato = () => {
   return (
     <>
       <div className='flex flex-col grow h-full'>
-        <div className='flex mx-12 mt-12 justify-between'>
+        <div className={`flex mx-12 ${tipo === 'professor' && 'mt-6'} justify-between`}>
           <div className='flex text-2xl  items-center gap-1'>
             <b>Saldo:</b> {data?.moedas}{' '}
             <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>

@@ -3,6 +3,7 @@ export interface IVantagem {
   nome: string;
   descricao: string;
   valor: number;
+  fotoName: string;
   foto: string;
-  idEmresa: string;
+  idEmpresa: string;
 }

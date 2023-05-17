@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { ISaldo } from '../types';
 import { CustomError } from '../utils/errorHandler';
 import { ProfessorService } from '../services/professor.service';
 import { IProfessor } from '../models';

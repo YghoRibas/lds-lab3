@@ -1,24 +1,17 @@
 import { http } from '../../../utils';
 import { IVantagem } from './interfaces';
 
-const loggedInUserId = localStorage.getItem('id');
-
 export class VantagemService {
-  static async getAllVantagens(): Promise<IVantagem[]> {
-    const response = await http.get('/vantagem', {
-      params: {
-        userId: loggedInUserId,
-      },
-    });
+  static async getAllVantagens(id?: string): Promise<IVantagem[]> {
+    const loggedInUserId = localStorage.getItem('id');
+    const body = id ? { id: loggedInUserId } : undefined;
+
+    const response = await http.post('/vantagem/all', body);
     return response.data;
   }
 
   static async getVantagemById(id: string): Promise<IVantagem> {
-    const response = await http.get(`/vantagem/${id}`, {
-      params: {
-        userId: loggedInUserId,
-      },
-    });
+    const response = await http.get(`/vantagem/${id}`);
     return response.data;
   }
 

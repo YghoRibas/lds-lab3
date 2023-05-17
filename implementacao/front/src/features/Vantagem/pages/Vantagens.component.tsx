@@ -1,19 +1,23 @@
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import React, { useEffect } from 'react';
 import { VantagemForm } from '../components/VantagemForm';
 import { VantagemService } from '../services';
 import { IVantagem } from '../services/interfaces';
 import { VantagemCard } from '../components';
 
-const modalId: string = 'vantagemForm';
+const modalFormId: string = 'vantagemForm';
 
 export const Vantagens = () => {
-  const [selectedVantagem, setSelectedVantagem] = React.useState<IVantagem | null>(null);
+  const [selectedVantagem, setSelectedVantagemId] = React.useState<string | null>(null);
   const id = localStorage.getItem('id');
+  const tipo = localStorage.getItem('tipo');
+
+  const queryClient = useQueryClient();
+  queryClient.invalidateQueries(['vantagens']);
 
   const getListaVantagens = async (): Promise<IVantagem[]> => {
     try {
-      return await VantagemService.getAllVantagens();
+      return await VantagemService.getAllVantagens(tipo === 'empresa' ? id! : '');
     } catch (error) {
       return [];
     }
@@ -22,17 +26,18 @@ export const Vantagens = () => {
   const { data, refetch } = useQuery<IVantagem[]>({
     queryKey: ['vantagens'],
     queryFn: getListaVantagens,
-    refetchOnWindowFocus: false,
   });
 
   return (
     <>
       <div className='flex flex-col grow h-full'>
-        <div className='flex mx-12 mt-12 justify-end'>
-          <label htmlFor={modalId} className='btn btn-primary shadow'>
-            Criar
-          </label>
-        </div>
+        {tipo === 'empresa' && (
+          <div className='flex mx-12 mt-12 justify-end'>
+            <label htmlFor={modalFormId} className='btn btn-primary shadow'>
+              Criar
+            </label>
+          </div>
+        )}
         <div className={`flex flex-col ${data?.length === 0 && 'justify-center'} mx-12 my-6 h-full`}>
           {(data?.length === 0 || data === undefined) && (
             <div className='flex justify-center items-center p-2'>
@@ -40,15 +45,17 @@ export const Vantagens = () => {
             </div>
           )}
           {data?.length !== 0 && (
-            <div className='grid grid-cols-3 gap-4'>
+            <div className='flex flex-wrap gap-4 overflow-y-auto'>
               {data?.map((vantagem) => (
-                <VantagemCard key={vantagem._id} title={vantagem.nome} description={vantagem.descricao} image={vantagem.foto} value={vantagem.valor} />
+                <label key={vantagem._id} htmlFor={modalFormId}>
+                  <VantagemCard title={vantagem.nome} description={vantagem.descricao} image={vantagem.foto} value={vantagem.valor} onClick={() => setSelectedVantagemId(vantagem._id!)} isAluno={tipo === 'aluno'} />
+                </label>
               ))}
             </div>
           )}
         </div>
       </div>
-      <VantagemForm modalId={modalId} refetchVantagens={refetch} onClose={() => console.log('fechou')} id={selectedVantagem?._id || null} />
+      {tipo === 'empresa' && <VantagemForm modalId={modalFormId} refetchVantagens={refetch} onClose={() => console.log('fechou')} id={selectedVantagem} />}
     </>
   );
 };

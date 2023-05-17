@@ -1,8 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { Extrato } from './Extrato.component';
 import { Vantagens } from '../../Vantagem';
+import { useState } from 'react';
 
 export const Home = () => {
+  const [currentTab, setCurrentTab] = useState(0);
+
   const navigate = useNavigate();
 
   const tipo = localStorage.getItem('tipo');
@@ -44,7 +47,21 @@ export const Home = () => {
           </div>
         </div>
       </div>
-      {tipo === 'professor' || (tipo === 'aluno' && <Extrato />)}
+      {tipo === 'professor' && <Extrato />}
+      {tipo === 'aluno' && (
+        <div className='flex flex-col grow h-full'>
+          <div className='tabs mx-12 my-6'>
+            <a className={`tab tab-bordered tab-lg ${currentTab === 0 && 'tab-active'}`} onClick={() => setCurrentTab(0)}>
+              Extrato
+            </a>
+            <a className={`tab tab-bordered tab-lg ${currentTab === 1 && 'tab-active'}`} onClick={() => setCurrentTab(1)}>
+              Vantagens
+            </a>
+          </div>
+          {currentTab === 0 && <Extrato />}
+          {currentTab === 1 && <Vantagens />}
+        </div>
+      )}
       {tipo === 'empresa' && <Vantagens />}
     </div>
   );

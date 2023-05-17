@@ -9,11 +9,12 @@ interface IProps {
   id: string | null;
   modalId: string;
   refetchVantagens: () => void;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 export const VantagemForm = ({ id, modalId, refetchVantagens, onClose }: IProps) => {
   const checkboxRef = useRef<HTMLInputElement>(null);
+  const fotoRef = useRef<HTMLInputElement>(null);
   const idLogged = localStorage.getItem('id');
 
   const formik = useFormik<IVantagem>({
@@ -21,13 +22,14 @@ export const VantagemForm = ({ id, modalId, refetchVantagens, onClose }: IProps)
       nome: '',
       descricao: '',
       valor: 0,
+      fotoName: '',
       foto: '',
-      idEmresa: idLogged!,
+      idEmpresa: idLogged!,
     },
     validationSchema: Yup.object({
       nome: Yup.string().required('Campo obrigatório'),
       descricao: Yup.string().required('Campo obrigatório'),
-      valor: Yup.number().required('Campo obrigatório'),
+      valor: Yup.number().required('Campo obrigatório').min(1, 'Valor mínimo de 1'),
       foto: Yup.string().required('Campo obrigatório'),
     }),
     onSubmit: async (values) => {
@@ -41,8 +43,10 @@ export const VantagemForm = ({ id, modalId, refetchVantagens, onClose }: IProps)
         console.error(error);
       } finally {
         formik.resetForm();
+        fotoRef.current!.value = '';
+
         if (checkboxRef.current) checkboxRef.current.checked = false;
-        onClose();
+        onClose && onClose();
         refetchVantagens();
       }
     },
@@ -52,8 +56,9 @@ export const VantagemForm = ({ id, modalId, refetchVantagens, onClose }: IProps)
     try {
       await VantagemService.deleteVantagem(id!);
       formik.resetForm();
+      fotoRef.current!.value = '';
       if (checkboxRef.current) checkboxRef.current.checked = false;
-      onClose();
+      onClose && onClose();
       refetchVantagens();
     } catch (error) {
       console.log(error);
@@ -66,6 +71,7 @@ export const VantagemForm = ({ id, modalId, refetchVantagens, onClose }: IProps)
 
     reader.onloadend = () => {
       const base64String = reader.result;
+      formik.setFieldValue('fotoName', event.target.files?.[0]?.name ?? '');
       formik.setFieldValue('foto', base64String);
     };
 
@@ -113,7 +119,7 @@ export const VantagemForm = ({ id, modalId, refetchVantagens, onClose }: IProps)
               className='modal-close btn btn-ghost'
               onClick={() => {
                 formik.resetForm();
-                onClose();
+                onClose && onClose();
               }}
             >
               <span>X</span>
@@ -150,8 +156,9 @@ export const VantagemForm = ({ id, modalId, refetchVantagens, onClose }: IProps)
                     </label>
                   )}
                 </div>
+                {id && <p>{formik.values.fotoName}</p>}
                 <div className='form-control w-full'>
-                  <input type='file' id='foto' name='foto' className={`file-input w-full max-w-xs ${formik.errors.foto && formik.touched.foto && 'input-error'}`} value={formik.values.foto} onChange={handleImageUpload} />
+                  <input ref={fotoRef} type='file' id='foto' name='foto' className={`file-input w-full max-w-xs ${formik.errors.foto && formik.touched.foto && 'input-error'}`} onChange={handleImageUpload} />
                   {formik.errors.foto && formik.touched.foto && (
                     <label className='label'>
                       <span className='label-text-alt text-error'>{formik.errors.foto}</span>

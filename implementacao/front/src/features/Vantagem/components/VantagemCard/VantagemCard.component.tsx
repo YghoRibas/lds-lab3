@@ -3,11 +3,13 @@ interface IProps {
   description: string;
   image: string;
   value: number;
+  isAluno: boolean;
+  onClick: () => void;
 }
 
-export const VantagemCard = ({ title, description, image, value }: IProps) => {
+export const VantagemCard = ({ title, description, image, value, isAluno, onClick }: IProps) => {
   return (
-    <div className='card w-96 bg-base-200 shadow-xl'>
+    <div className={`card w-96 bg-base-200 shadow-xl ${!isAluno && 'hover:filter hover:brightness-110 active:scale-95 transition duration-300'}`} onClick={onClick}>
       <img
         className='rounded-t-lg'
         style={{
@@ -20,9 +22,8 @@ export const VantagemCard = ({ title, description, image, value }: IProps) => {
         alt={title}
       />
       <div className='card-body'>
-        <h2 className='card-title'>{title}</h2>
-        <p>{description}</p>
-        <div className='card-actions justify-end'>
+        <div className='flex justify-between'>
+          <h2 className='card-title'>{title}</h2>
           <div className='flex text-2xl  items-center gap-1'>
             {value}{' '}
             <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
@@ -30,6 +31,12 @@ export const VantagemCard = ({ title, description, image, value }: IProps) => {
             </svg>
           </div>
         </div>
+        <p>{description}</p>
+        {isAluno && (
+          <div className='card-actions justify-end'>
+            <button className='btn btn-primary'>Comprar</button>
+          </div>
+        )}
       </div>
     </div>
   );

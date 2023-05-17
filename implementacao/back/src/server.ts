@@ -6,6 +6,7 @@ import cors from 'cors';
 import usuarioRouter from './routes/usuario.routes';
 import { errorHandler } from './utils';
 import professorRouter from './routes/professor.routes';
+import vantagemController from './routes/vanatagem.routes';
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(alunoRouter);
 app.use(empresaRouter);
 app.use(usuarioRouter);
 app.use(professorRouter);
+app.use(vantagemController);
 
 app.use(errorHandler);
 
