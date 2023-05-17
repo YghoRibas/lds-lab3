@@ -2,6 +2,7 @@ import { IProfessor } from '../models';
 import { AlunoRepository, ProfessorRepository, TransacaoRepository, UsuarioRepository } from '../repositories';
 import { ISaldo, ITransacaoWithNames } from '../types';
 import { CustomError } from '../utils/errorHandler';
+import { MailType, sendEmail } from '../utils/mailer';
 
 export class ProfessorService {
   private professorRepository: ProfessorRepository;
@@ -61,6 +62,11 @@ export class ProfessorService {
           valor: moedas,
           data: new Date(),
           descricao,
+        });
+        await sendEmail(aluno.email, {
+          subject: 'Algo',
+          type: MailType.TEXT,
+          body: `Voce recebeu ${moedas} moedas de ${professor.nome}`
         });
       }
     } else {
