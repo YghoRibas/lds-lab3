@@ -7,13 +7,13 @@ export class ProfessorService {
   private professorRepository: ProfessorRepository;
   private alunoRepository: AlunoRepository;
   private usuarioRepository: UsuarioRepository;
-  private trasacaoRepository: TransacaoRepository;
+  private transacaoRepository: TransacaoRepository;
 
   constructor() {
     this.professorRepository = new ProfessorRepository();
     this.alunoRepository = new AlunoRepository();
     this.usuarioRepository = new UsuarioRepository();
-    this.trasacaoRepository = new TransacaoRepository();
+    this.transacaoRepository = new TransacaoRepository();
   }
 
   public async getAllProfessores(): Promise<IProfessor[]> {
@@ -55,7 +55,7 @@ export class ProfessorService {
 
         await this.professorRepository.updateProfessor(professorId, professor);
         await this.alunoRepository.updateAluno(alunoId, aluno);
-        await this.trasacaoRepository.createTransacao({
+        await this.transacaoRepository.createTransacao({
           remetenteId: professorId,
           destinatarioId: alunoId,
           valor: moedas,

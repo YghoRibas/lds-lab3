@@ -5,11 +5,11 @@ import { CustomError } from '../utils/errorHandler';
 
 export class UsuarioService {
   private usuarioRepository: UsuarioRepository;
-  private trasacaoRepository: TransacaoRepository;
+  private transacaoRepository: TransacaoRepository;
 
   constructor() {
     this.usuarioRepository = new UsuarioRepository();
-    this.trasacaoRepository = new TransacaoRepository();
+    this.transacaoRepository = new TransacaoRepository();
   }
 
   public async getUsuarioById(id: string): Promise<IUsuario | null> {
@@ -24,7 +24,7 @@ export class UsuarioService {
     const usuario = await this.usuarioRepository.getUsuarioById(id);
 
     if (usuario) {
-      const transacoes = await this.trasacaoRepository.getTransacaoByRemetenteIdOrDestinatario(id);
+      const transacoes = await this.transacaoRepository.getTransacaoByRemetenteIdOrDestinatario(id);
 
       let transacoesWithNames: ITransacaoWithNames[] = [];
 
@@ -33,6 +33,7 @@ export class UsuarioService {
         const destinatario = await this.usuarioRepository.getUsuarioById(transacao.destinatarioId);
 
         transacoesWithNames.push({
+          _id: transacao._id,
           remetenteId: transacao.remetenteId,
           remetenteNome: remetente?.nome || '',
           destinatarioId: transacao.destinatarioId,

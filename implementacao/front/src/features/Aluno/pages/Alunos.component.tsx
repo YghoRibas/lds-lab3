@@ -25,12 +25,12 @@ export const Alunos = () => {
 
   return (
     <>
-      <div className='flex justify-end items-center p-2'>
+      <div className='flex justify-end items-center mx-12'>
         <label htmlFor={modalId} className='btn'>
           Criar
         </label>
       </div>
-      <div className='overflow-x-auto'>
+      <div className='flex flex-col h-full bg-base-200 rounded-md shadow-lg mx-12 my-6'>
         <table className='table w-full'>
           <thead>
             <tr>
@@ -40,7 +40,7 @@ export const Alunos = () => {
               <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className='overflow-x-auto'>
             {data &&
               data.length > 0 &&
               data.map(
@@ -53,7 +53,7 @@ export const Alunos = () => {
                       <div className='flex justify-end'>
                         <label
                           htmlFor={modalId}
-                          className='btn'
+                          className='btn btn-sm'
                           onClick={() => {
                             setSelectedAluno(aluno._id!);
                           }}

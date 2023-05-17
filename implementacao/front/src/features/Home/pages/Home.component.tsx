@@ -1,33 +1,24 @@
-import { useQuery } from '@tanstack/react-query';
-import { Link, useNavigate } from 'react-router-dom';
-import { HomeService } from '../services';
-import { ISaldo } from '../services/interfaces';
-import { TransacaoForm } from '../components';
-
-const modalId: string = 'transacaoForm';
+import { useNavigate } from 'react-router-dom';
+import { Extrato } from './Extrato.component';
+import { Vantagens } from '../../Vantagem';
+import { useState } from 'react';
 
 export const Home = () => {
+  const [currentTab, setCurrentTab] = useState(0);
+
   const navigate = useNavigate();
 
-  const id = localStorage.getItem('id');
   const tipo = localStorage.getItem('tipo');
 
-  const getListaEmpresas = async (): Promise<ISaldo> => {
-    try {
-      return await HomeService.getSaldo();
-    } catch (error) {
-      return { moedas: 0, transacoes: [] };
-    }
-  };
-
-  const { data, refetch } = useQuery<ISaldo>({
-    queryKey: ['saldo'],
-    queryFn: getListaEmpresas,
-    refetchOnWindowFocus: false,
-  });
-
   return (
-    <>
+    <div
+      className='w-full h-full flex flex-col'
+      style={{
+        backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px)',
+        backgroundPosition: '50% 50%',
+        backgroundSize: '1.1rem 1.1rem',
+      }}
+    >
       <div className='navbar bg-base-200'>
         <div className='flex-1'>
           <a className='btn btn-ghost normal-case text-xl'>Sistema de Mérito Escolar</a>
@@ -56,54 +47,22 @@ export const Home = () => {
           </div>
         </div>
       </div>
-      <div className='flex mx-12 mt-12 mb-6 justify-between'>
-        <div className='flex text-lg  items-center gap-1'>
-          Saldo: {data?.moedas}{' '}
-          <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='w-6 h-6'>
-            <path strokeLinecap='round' strokeLinejoin='round' d='M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z' />
-          </svg>
-        </div>
-        {tipo === 'professor' && (
-          <label htmlFor={modalId} className='btn btn-primary'>
-            Nova Transação
-          </label>
-        )}
-      </div>
-      <div className='overflow-x-auto mx-12 mt-6'>
-        <table className='table w-full'>
-          <thead>
-            <tr>
-              <th>Tipo</th>
-              <th>Remetente</th>
-              <th>Destinatário</th>
-              <th>Valor</th>
-              <th>Descrição</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data &&
-              data.transacoes.length > 0 &&
-              data.transacoes.map(
-                (transacao) => (
-                  <tr key={transacao._id}>
-                    <td>{transacao.remetenteId !== id ? 'Recebimento' : 'Envio'}</td>
-                    <td>{transacao.remetenteNome}</td>
-                    <td>{transacao.destinatarioNome}</td>
-                    <td>{transacao.valor}</td>
-                    <td className='text-ellipsis'>{transacao.descricao}</td>
-                  </tr>
-                ),
-                []
-              )}
-          </tbody>
-        </table>
-        {(data?.transacoes.length === 0 || data === undefined) && (
-          <div className='flex justify-center items-center p-2'>
-            <p className='text-gray-500'>Nenhuma transação encontrada</p>
+      {tipo === 'professor' && <Extrato />}
+      {tipo === 'aluno' && (
+        <div className='flex flex-col grow h-full'>
+          <div className='tabs mx-12 my-6'>
+            <a className={`tab tab-bordered tab-lg ${currentTab === 0 && 'tab-active'}`} onClick={() => setCurrentTab(0)}>
+              Extrato
+            </a>
+            <a className={`tab tab-bordered tab-lg ${currentTab === 1 && 'tab-active'}`} onClick={() => setCurrentTab(1)}>
+              Vantagens
+            </a>
           </div>
-        )}
-      </div>
-      <TransacaoForm modalId={modalId} refetchTransacoes={refetch} />
-    </>
+          {currentTab === 0 && <Extrato />}
+          {currentTab === 1 && <Vantagens />}
+        </div>
+      )}
+      {tipo === 'empresa' && <Vantagens />}
+    </div>
   );
 };

@@ -2,9 +2,9 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { INewTransacao } from '../services/interfaces';
-import { HomeService } from '../services';
-import { AlunoService } from '../../Aluno/services';
+import { INewTransacao } from '../../services/interfaces';
+import { HomeService } from '../../services';
+import { AlunoService } from '../../../Aluno/services';
 
 interface IProps {
   modalId: string;

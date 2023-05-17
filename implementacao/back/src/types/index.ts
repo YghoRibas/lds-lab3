@@ -1,4 +1,5 @@
 export interface ITransacaoWithNames {
+  _id: string;
   destinatarioId: string;
   destinatarioNome: string;
   remetenteId: string;
