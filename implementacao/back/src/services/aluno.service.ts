@@ -1,17 +1,17 @@
 import { IAluno } from '../models/aluno';
-import { AlunoRepository, TransacaoRepository, UsuarioRepository } from '../repositories';
-import { ISaldo, ITransacaoWithNames } from '../types';
+import { AlunoRepository, TransacaoRepository, VantagemRepository } from '../repositories';
 import { CustomError } from '../utils/errorHandler';
+import { MailType, sendEmail } from '../utils/mailer';
 
 export class AlunoService {
   private alunoRepository: AlunoRepository;
-  private usuarioRepository: UsuarioRepository;
   private transacaoRepository: TransacaoRepository;
+  private vantagemRepository: VantagemRepository;
 
   constructor() {
     this.alunoRepository = new AlunoRepository();
-    this.usuarioRepository = new UsuarioRepository();
     this.transacaoRepository = new TransacaoRepository();
+    this.vantagemRepository = new VantagemRepository();
   }
 
   public async getAllAlunos(): Promise<IAluno[]> {
@@ -38,5 +38,47 @@ export class AlunoService {
 
   public async deleteAluno(id: string): Promise<void> {
     return await this.alunoRepository.deleteAluno(id);
+  }
+
+  public async resgatarVantagem(id: string, idAluno: string): Promise<void> {
+    const aluno = await this.alunoRepository.getAlunoById(idAluno);
+
+    const vantagem = await this.vantagemRepository.getVanatagemById(id);
+
+    if (vantagem) {
+      if (aluno) {
+        if (aluno.moedas - vantagem.valor >= 0) {
+          aluno.moedas -= vantagem.valor;
+          await this.alunoRepository.updateAluno(idAluno, aluno);
+
+          await this.transacaoRepository.createTransacao({
+            remetenteId: idAluno,
+            destinatarioId: vantagem.idEmpresa,
+            valor: vantagem.valor,
+            vantagemId: vantagem._id,
+            data: new Date(),
+            descricao: `Resgate de vantagem: ${vantagem.nome}`,
+          });
+
+          await sendEmail(aluno.email, {
+            subject: 'Vantagem Resgatada',
+            type: MailType.TEXT,
+            body: `Voce resgatou a vantagem ${vantagem.nome} por ${vantagem.valor} moedas. Codógo para resgate: ${vantagem._id}`,
+          });
+
+          await sendEmail(aluno.email, {
+            subject: 'Vantagem Resgatada',
+            type: MailType.TEXT,
+            body: `A vantagem ${vantagem.nome} foi resgatada por ${aluno.nome} com sucesso.`,
+          });
+        } else {
+          throw new CustomError('Moedas insuficientes', 400);
+        }
+      } else {
+        throw new CustomError('Aluno não encontrado', 404);
+      }
+    } else {
+      throw new CustomError('Vantagem não encontrada', 404);
+    }
   }
 }

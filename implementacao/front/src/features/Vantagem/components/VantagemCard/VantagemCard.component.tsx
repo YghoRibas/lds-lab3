@@ -1,13 +1,15 @@
 interface IProps {
+  id: string;
   title: string;
   description: string;
   image: string;
   value: number;
   isAluno: boolean;
   onClick: () => void;
+  onClickResgatar: (id: string) => void;
 }
 
-export const VantagemCard = ({ title, description, image, value, isAluno, onClick }: IProps) => {
+export const VantagemCard = ({ id, title, description, image, value, isAluno, onClick, onClickResgatar }: IProps) => {
   return (
     <div className={`card w-96 bg-base-200 shadow-xl ${!isAluno && 'hover:filter hover:brightness-110 active:scale-95 transition duration-300'}`} onClick={onClick}>
       <img
@@ -33,8 +35,8 @@ export const VantagemCard = ({ title, description, image, value, isAluno, onClic
         </div>
         <p>{description}</p>
         {isAluno && (
-          <div className='card-actions justify-end'>
-            <button className='btn btn-primary'>Comprar</button>
+          <div className='card-actions justify-end' onClick={() => onClickResgatar(id)}>
+            <button className='btn btn-primary'>Resgatar</button>
           </div>
         )}
       </div>
