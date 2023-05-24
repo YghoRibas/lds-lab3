@@ -1,5 +1,5 @@
 import { IAluno } from '../models/aluno';
-import { AlunoRepository, TransacaoRepository, VantagemRepository } from '../repositories';
+import { AlunoRepository, EmpresaRepository, TransacaoRepository, VantagemRepository } from '../repositories';
 import { CustomError } from '../utils/errorHandler';
 import { MailType, sendEmail } from '../utils/mailer';
 
@@ -7,11 +7,13 @@ export class AlunoService {
   private alunoRepository: AlunoRepository;
   private transacaoRepository: TransacaoRepository;
   private vantagemRepository: VantagemRepository;
+  private empresaRepository: EmpresaRepository;
 
   constructor() {
     this.alunoRepository = new AlunoRepository();
     this.transacaoRepository = new TransacaoRepository();
     this.vantagemRepository = new VantagemRepository();
+    this.empresaRepository = new EmpresaRepository();
   }
 
   public async getAllAlunos(): Promise<IAluno[]> {
@@ -60,17 +62,21 @@ export class AlunoService {
             descricao: `Resgate de vantagem: ${vantagem.nome}`,
           });
 
+          const empresa = await this.empresaRepository.getEmpresaById(vantagem.idEmpresa);
+
           await sendEmail(aluno.email, {
             subject: 'Vantagem Resgatada',
             type: MailType.TEXT,
             body: `Voce resgatou a vantagem ${vantagem.nome} por ${vantagem.valor} moedas. Codógo para resgate: ${vantagem._id}`,
           });
 
-          await sendEmail(aluno.email, {
-            subject: 'Vantagem Resgatada',
-            type: MailType.TEXT,
-            body: `A vantagem ${vantagem.nome} foi resgatada por ${aluno.nome} com sucesso.`,
-          });
+          if (empresa) {
+            await sendEmail(empresa.email, {
+              subject: 'Vantagem Resgatada',
+              type: MailType.TEXT,
+              body: `A vantagem ${vantagem.nome} foi resgatada por ${aluno.nome} com sucesso.`,
+            });
+          }
         } else {
           throw new CustomError('Moedas insuficientes', 400);
         }
