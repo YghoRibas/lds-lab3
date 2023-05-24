@@ -15,7 +15,7 @@ export class AlunoRepository {
     return newData;
   }
 
-  public async updateAluno(id: string, data: IAluno): Promise<IAluno | null> {
+  public async updateAluno(id: string, data: Partial<IAluno>): Promise<IAluno | null> {
     const updatedData = await Aluno.findByIdAndUpdate(id, data, { new: true });
     return updatedData;
   }

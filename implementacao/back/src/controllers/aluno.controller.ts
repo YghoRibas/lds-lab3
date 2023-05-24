@@ -59,4 +59,15 @@ export class AlunoController {
       next(new CustomError(err.message, err.statusCode));
     }
   }
+
+  public async resgatarVantagem(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const id: string = req.body.id;
+      const idAluno: string = req.body.idAluno;
+      await this.alunoService.resgatarVantagem(id, idAluno);
+      res.status(200).send();
+    } catch (err: any) {
+      next(new CustomError(err.message, err.statusCode));
+    }
+  }
 }
