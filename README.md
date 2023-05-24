@@ -17,6 +17,8 @@
 - [Diagramas de Sequência](./projeto/DS)
   - [Diagramas de Sequência - CRUD Aluno](./projeto/DS/diagrama_de_sequencia_crud_aluno.png)
   - [Diagramas de Sequência - CRUD Empresa](./projeto/DS/diagrama_de_sequencia_crud_empresa.png)
+  - [Diagramas de Sequência - CRUD Vantagem](./projeto/DS/diagrama_de_sequencia_crud_vantagem.png)
   - [Diagrama de Sequência - UC03](./projeto/DS/diagrama_de_sequencia_uc03.png)
   - [Diagrama de Sequência - UC04](./projeto/DS/diagrama_de_sequencia_uc04.png)
+  - [Diagrama de Sequência - UC06](./projeto/DS/diagrama_de_sequencia_uc06.png)
 - [Modelo Entidade Relacionamento](./projeto/modelo_er.md)
