@@ -8,8 +8,7 @@ import { VantagemCard } from '../components';
 const modalFormId: string = 'vantagemForm';
 
 export const Vantagens = () => {
-  const [selectedVantagem, setSelectedVantagemId] = React.useState<string | null>(null);
-  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [selectedVantagemId, setSelectedVantagemId] = React.useState<string | null>(null);
   const id = localStorage.getItem('id');
   const tipo = localStorage.getItem('tipo');
 
@@ -28,6 +27,15 @@ export const Vantagens = () => {
     queryKey: ['vantagens'],
     queryFn: getListaVantagens,
   });
+
+  const onClickResgatar = async (id: string) => {
+    try {
+      await VantagemService.resgatarVantagem(id);
+      queryClient.invalidateQueries(['vantagens']);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -56,6 +64,7 @@ export const Vantagens = () => {
               {data?.map((vantagem) => (
                 <label key={vantagem._id} htmlFor={modalFormId}>
                   <VantagemCard
+                    id={vantagem._id!}
                     title={vantagem.nome}
                     description={vantagem.descricao}
                     image={vantagem.foto}
@@ -63,6 +72,7 @@ export const Vantagens = () => {
                     onClick={() => {
                       setSelectedVantagemId(vantagem._id!);
                     }}
+                    onClickResgatar={onClickResgatar}
                     isAluno={tipo === 'aluno'}
                   />
                 </label>
@@ -71,7 +81,7 @@ export const Vantagens = () => {
           )}
         </div>
       </div>
-      {tipo === 'empresa' && <VantagemForm modalId={modalFormId} refetchVantagens={refetch} id={selectedVantagem} />}
+      {tipo === 'empresa' && <VantagemForm modalId={modalFormId} refetchVantagens={refetch} id={selectedVantagemId} />}
     </>
   );
 };

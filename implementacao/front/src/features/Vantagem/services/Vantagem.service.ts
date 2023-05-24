@@ -26,4 +26,11 @@ export class VantagemService {
   static async deleteVantagem(id: string): Promise<void> {
     await http.delete(`/vantagem/${id}`);
   }
+
+  static async resgatarVantagem(id: string): Promise<void> {
+    const loggedInUserId = localStorage.getItem('id');
+    const body = { id: id, idAluno: loggedInUserId };
+
+    await http.post('/aluno/resgatarVantagem', body);
+  }
 }
