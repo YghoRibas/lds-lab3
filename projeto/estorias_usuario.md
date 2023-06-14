@@ -7,3 +7,5 @@
 - US07 - Como aluno, quero trocar minhas moedas por vantagens cadastradas no sistema, para poder aproveitar os benefícios do programa de reconhecimento.
 - US08 - Como empresa parceira, quero cadastrar vantagens no sistema de mérito, para poderem ser resgatadas por alunos.
 - US09 - Como usuário, eu quero poder autenticar-me no sistema, fornecendo um nome de usuário e senha válidos, para ter acesso às funcionalidades disponíveis e garantir a segurança dos dados.
+- US10 - Como aluno, quero poder exportar meu extrato contendo as minhas transações e saldo, para poder analisar melhor o uso das moedas.
+- US11 - Como professor, quero poder exportar meu extrato contendo as minhas transações e saldo, para poder analisar melhor o uso das moedas.

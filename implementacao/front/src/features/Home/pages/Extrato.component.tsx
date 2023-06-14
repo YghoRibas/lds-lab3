@@ -25,7 +25,7 @@ export const Extrato = () => {
     refetchOnWindowFocus: false,
   });
 
-  const onClickGenerateReport = async (): Promise<void> => {
+  const onClickGenerateReport = (): void => {
     const doc = new jsPDF();
 
     const lineY = 20;
